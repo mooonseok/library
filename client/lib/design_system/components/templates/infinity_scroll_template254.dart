@@ -6,7 +6,6 @@ import 'package:client/design_system/utility/primary_methods/primart_method.dart
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-
 /// {@category Templates}
 /// # 인피니트스크롤 생성해주는 클래스.
 /// * [infiniteScrollBuilder] : 인피니트 스크롤의 데이터를 불러오는 메서드.
@@ -53,7 +52,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class InfiniteScroll254Template<ItemType> extends StatefulWidget {
   final InfiniteScrollInterface<ItemType> infiniteScrollBuilder;
-  final int pageSize;
   final Color indicatorColor;
   final ScrollTypes? scrollType;
   final ScrollPhysics? scrollPhysics;
@@ -67,7 +65,6 @@ class InfiniteScroll254Template<ItemType> extends StatefulWidget {
 
   const InfiniteScroll254Template({
     required this.infiniteScrollBuilder,
-    required this.pageSize,
     required this.indicatorColor,
     Key? key,
     this.scrollType = ScrollTypes.listView,
@@ -109,9 +106,9 @@ class _InfiniteScroll254Template<ItemType>
         List<ItemType> newItems =
             await widget.infiniteScrollBuilder.getInfiniteScrollItemData(
           pageKey: pageKey,
-          pageSize: widget.pageSize,
+          pageSize: 10,
         );
-        final isLastPage = newItems.length < widget.pageSize;
+        final isLastPage = newItems.length < 10;
         if (isLastPage) {
           _pagingController.appendLastPage(newItems);
         } else {
