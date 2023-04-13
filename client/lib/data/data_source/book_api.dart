@@ -1,42 +1,51 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:client/design_system/models/book.dart';
-import 'package:client/design_system/models/result.dart';
-import 'package:client/utility/common_methods/common_method.dart';
-import 'package:client/utility/constants/const_paths.dart';
-import 'package:http/http.dart' as http;
+import 'package:client/database/book/books_module.dart';
+import 'package:client/database/book/dto/create_book_dto.dart';
+import 'package:client/database/book/dto/update_book_dto.dart';
+import 'package:client/database/book/entities/book.dart';
 
 class BookApi {
-  final http.Client client;
+  BooksModule module;
+  BookApi(this.module);
 
-  BookApi(this.client);
-
-  Future<Result<List<dynamic>>> getProject({
+  Future<List<Book>> getProject({
     int? pageKey,
     int? pageSize,
+    bool? unable,
+    String? keyword = '',
   }) async {
-    Uri uri = Uri.http(ConstPaths.baseUrl,
-        CommonMethod.format.urlPath(version: 1, mainPath: 'books'), {
-      'pageKey': pageKey.toString(),
-      'pageSize': pageSize.toString(),
-    });
     try {
-      // final response = await client.get(uri);
-      return Result.byResponse(
-          http.Response(json.encode(_bookList), HttpStatus.ok));
+      final response = await BooksModule.service
+          .getBookList(pageKey!, pageSize!, unable: unable, keyword: keyword);
+      return response;
     } catch (e) {
-      return const Result.error('네트워크 에러');
+      rethrow;
+    }
+  }
+
+  Future<int> registBook(CreateBookDTO model) async {
+    try {
+      final response = await BooksModule.service.addBook(book: model);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<int> deleteBook(int id) async {
+    try {
+      final response = await BooksModule.service.deleteBook(id);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<int> updateBookBorrower(UpdateBookDTO bookToUpdate) async {
+    try {
+      return await BooksModule.service
+          .updateBookBorrower(bookToUpdate: bookToUpdate);
+    } catch (e) {
+      rethrow;
     }
   }
 }
-
-List<Book> _bookList = [
-  Book(
-    id: 1,
-    name: '책 1',
-    author: '박문석',
-    publisher: '랩이오사',
-    isAbleCheckOut: true,
-  ),
-];

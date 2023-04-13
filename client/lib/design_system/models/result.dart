@@ -5,7 +5,6 @@ import 'package:client/design_system/utility/primary_methods/primart_method.dart
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:http/http.dart';
 
-
 part 'result.freezed.dart';
 
 @freezed

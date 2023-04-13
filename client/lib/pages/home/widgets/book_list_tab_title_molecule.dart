@@ -9,7 +9,7 @@ class BookListTabTitleMolecule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(color: ColorType.gray500.color),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,6 +42,14 @@ class BookListTabTitleMolecule extends StatelessWidget {
             flex: 130,
             child: Text254Atom(
               '대출여부',
+              style: TypoType.body1M.getTextStyle(),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Expanded(
+            flex: 130,
+            child: Text254Atom(
+              '대출인',
               style: TypoType.body1M.getTextStyle(),
               textAlign: TextAlign.center,
             ),

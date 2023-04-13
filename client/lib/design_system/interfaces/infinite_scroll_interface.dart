@@ -7,7 +7,10 @@ abstract class InfiniteScrollInterface<ListItem> {
   Future<List<ListItem>> getInfiniteScrollItemData(
       {required int pageSize, required int pageKey});
 
-  Widget setInfiniteScrollWidget({required ListItem item, int? index});
+  Widget setInfiniteScrollWidget({
+    required ListItem item,
+    int? index,
+  });
 
   void onError(BuildContext context, dynamic error, VoidCallback retry,
       {int? statusCode}) {

@@ -10,6 +10,7 @@ abstract class ConstPaths {
 
   // server paths
   static const _productionUrl = '43.200.187.166:7300';
-  static final _developUrl = Platform.isAndroid ? '10.0.2.2:7300' : 'localhost:7300';
+  static final _developUrl =
+      Platform.isAndroid ? '192.168.0.2' : 'localhost:7300';
   static final baseUrl = kReleaseMode ? _productionUrl : _developUrl;
 }

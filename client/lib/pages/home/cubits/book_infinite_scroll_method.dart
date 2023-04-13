@@ -1,7 +1,6 @@
 import 'package:client/design_system/interfaces/infinite_scroll_cubit_interface.dart';
 import 'package:client/design_system/interfaces/infinite_scroll_function_interface.dart';
 import 'package:client/design_system/interfaces/infinite_scroll_interface.dart';
-import 'package:client/design_system/models/book.dart';
 import 'package:client/pages/home/widgets/book_list_row_molecule.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +17,8 @@ class BookInfiniteScrollMethod extends InfiniteScrollInterface<dynamic> {
   Future<List<dynamic>> getInfiniteScrollItemData({
     required int pageSize,
     required int pageKey,
+    bool? unable,
+    String? keyword,
   }) async {
     return functionProps.getData!(
       pageKey: pageKey,
@@ -26,8 +27,13 @@ class BookInfiniteScrollMethod extends InfiniteScrollInterface<dynamic> {
   }
 
   @override
-  Widget setInfiniteScrollWidget({required dynamic item, int? index}) {
-    return BookListRowMolecule.buildWidget(book: item, onTap: () {});
+  Widget setInfiniteScrollWidget({
+    required dynamic item,
+    int? index,
+  }) {
+    return BookListRowMolecule.buildWidget(
+      book: item,
+    );
   }
 
   @override

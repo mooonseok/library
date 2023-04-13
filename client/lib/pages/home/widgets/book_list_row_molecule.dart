@@ -1,39 +1,28 @@
+import 'package:client/database/book/dto/update_book_dto.dart';
+import 'package:client/database/book/entities/book.dart';
 import 'package:client/design_system/components/atoms/text254_atom.dart';
-import 'package:client/design_system/models/book.dart';
+import 'package:client/design_system/utility/primary_methods/primart_method.dart';
+import 'package:client/pages/home/home_view_model.dart';
+import 'package:client/pages/home/widgets/check_out_contents_column.dart';
 import 'package:client/widgets/organisms/regular_modal_organism.dart';
 import 'package:client/styles/color_type.dart';
 import 'package:client/styles/regular_modal_type.dart';
 import 'package:client/styles/typo_type.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BookListRowMolecule extends StatelessWidget {
   final Book book;
-  final Function() onTap;
   const BookListRowMolecule({
     super.key,
     required this.book,
-    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        regularModalOrganism(
-          context,
-          titleText: book.isAbleCheckOut ? '대출' : '반납',
-          contentText:
-              '${book.name}을 ${book.isAbleCheckOut ? '대출하시겠습니까' : '반납하시겠습니까?'}?',
-          regularModalType: RegularModalTypes.basic,
-          buttonsData: {
-            '취소': () {
-              Navigator.pop(context);
-            },
-            book.isAbleCheckOut ? '대출' : '반납': () {
-              Navigator.pop(context);
-            }
-          },
-        );
+        _checkOutModal(context);
       },
       contentPadding: EdgeInsets.zero,
       minVerticalPadding: 0,
@@ -74,7 +63,17 @@ class BookListRowMolecule extends StatelessWidget {
             Expanded(
               flex: 130,
               child: Text254Atom(
-                book.isAbleCheckOut ? '가능' : '대출 중',
+                book.isAbleCheckOut! ? '가능' : '대출 중',
+                style: TypoType.body1M.getTextStyle(),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Expanded(
+              flex: 130,
+              child: Text254Atom(
+                PrimaryMethod.check.isNull(book.borrower)
+                    ? '-'
+                    : book.borrower!,
                 style: TypoType.body1M.getTextStyle(),
                 textAlign: TextAlign.center,
               ),
@@ -87,14 +86,60 @@ class BookListRowMolecule extends StatelessWidget {
 
   static Widget buildWidget({
     required Book book,
-    required Function() onTap,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 43),
+      padding: const EdgeInsets.only(bottom: 0),
       child: BookListRowMolecule(
         book: book,
-        onTap: onTap,
       ),
+    );
+  }
+
+  _checkOutModal(BuildContext context) {
+    final vm = Provider.of<HomeViewModel>(context, listen: false);
+
+    regularModalOrganism(
+      context,
+      titleText: book.isAbleCheckOut! ? '대출' : '반납',
+      contentsWidget: CheckOutContentsColumn(book: book, vm: vm),
+      regularModalType: RegularModalTypes.basic,
+      buttonsData: {
+        '취소': () {
+          Navigator.pop(context);
+        },
+        book.isAbleCheckOut! ? '대출' : '반납': () async {
+          try {
+            await vm.bookApiRepository.updateBookBorrower(
+              UpdateBookDTO(
+                id: book.id,
+                borrower: vm.homeControllerModel.borrowerController.text,
+              ),
+            );
+            vm.homeControllerModel.borrowerController.clear();
+            vm.homeControllerModel.pagingController.refresh();
+          } catch (e) {
+            Navigator.pop(context);
+            _onErrorModal(context);
+          }
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+        }
+      },
+    );
+  }
+
+  _onErrorModal(BuildContext context) {
+    return regularModalOrganism(
+      context,
+      titleText: '실패',
+      titleColor: ColorType.systemRed.color,
+      contentText: book.isAbleCheckOut! ? '대출' : '반납' '에 실패하였습니다 다시 시도해주세요.',
+      regularModalType: RegularModalTypes.basic,
+      buttonsData: {
+        '다시시도': () {
+          Navigator.pop(context);
+        },
+      },
     );
   }
 }

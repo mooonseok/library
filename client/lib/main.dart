@@ -1,4 +1,6 @@
+import 'package:client/database/book/db_connection.dart';
 import 'package:client/di/provider_setup.dart';
+import 'package:client/pages/book_add_page/book_add_page.dart';
 import 'package:client/pages/home/home_page.dart';
 import 'package:client/styles/color_type.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 Future<void> main() async {
- WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -24,6 +26,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DBConnection.getInstance();
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
@@ -43,7 +46,8 @@ class App extends StatelessWidget {
           ),
           initialRoute: HomePage.routeName,
           routes: {
-            HomePage.routeName:(context)=> const HomePage(),
+            HomePage.routeName: (context) => const HomePage(),
+            BookAddPage.routeName: (context) => const BookAddPage()
           },
         );
       },

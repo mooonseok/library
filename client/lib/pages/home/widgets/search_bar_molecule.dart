@@ -14,6 +14,7 @@ class SearchBarMolecule extends StatelessWidget {
   final TextEditingController? controller;
   final double searchBarHeight;
   final double? serachBarWidth;
+  final Function(String)? onChanged;
 
   const SearchBarMolecule({
     Key? key,
@@ -24,6 +25,7 @@ class SearchBarMolecule extends StatelessWidget {
     this.controller,
     this.searchBarHeight = 50,
     this.serachBarWidth,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -62,6 +64,7 @@ class SearchBarMolecule extends StatelessWidget {
               decoration: inputDecoration,
               style: textStyle,
               controller: controller,
+              onChanged: onChanged,
             ),
           )),
           SizedBox(
