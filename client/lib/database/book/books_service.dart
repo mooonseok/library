@@ -20,8 +20,9 @@ class BooksService {
   }
 
   Future<List<Book>> getBookList(int pageKey, int pageSize,
-      {bool? unable, String? keyword = ''}) async {
-    return await repository.getBooks(pageSize, pageKey, keyword, unable);
+      {bool? isAbleToCheckOut, String? keyword = ''}) async {
+    return await repository.getBooks(
+        pageSize, pageKey, keyword, isAbleToCheckOut);
   }
 
   Future<int> updateBookBorrower({required UpdateBookDTO bookToUpdate}) async {

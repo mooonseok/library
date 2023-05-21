@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
 
     vm.bookInfiniteScrollCubit.init(
       vm.homeControllerModel.pagingController,
-      BookInfiniteScrollFunction(getData: _getData(vm)),
+      BookInfiniteScrollFunction(getData: _getBookListData(vm)),
     );
     BookInfiniteScrollMethod bookInfiniteScrollMethod =
         BookInfiniteScrollMethod(
@@ -69,13 +69,13 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  _getData(
+  _getBookListData(
     HomeViewModel vm,
   ) =>
       ({
         required int pageKey,
         required int pageSize,
-        bool? unable,
+        bool? isAbleToCheckOut,
         String? keyword,
       }) async {
         final result = await _getBookList(
@@ -96,7 +96,7 @@ class HomePage extends StatelessWidget {
     return await vm.bookApiRepository.getBooks(
       pageSize: pageSize,
       pageKey: pageKey,
-      unable: vm.checkBorrowedCubit.state ? true : null,
+      isAbleToCheckOut: vm.checkBorrowedCubit.state ? true : null,
       keyword: vm.homeControllerModel.searchTextEdittingController.text,
     );
   }

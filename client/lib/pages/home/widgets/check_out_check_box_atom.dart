@@ -4,9 +4,9 @@ import 'package:client/styles/typo_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CheckOutCheckBoxAtom extends StatelessWidget {
+class CheckBoxAtom extends StatelessWidget {
   final HomeViewModel vm;
-  const CheckOutCheckBoxAtom({
+  const CheckBoxAtom({
     super.key,
     required this.vm,
   });

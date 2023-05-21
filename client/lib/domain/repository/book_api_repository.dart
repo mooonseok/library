@@ -6,7 +6,7 @@ abstract class BookApiRepository {
   Future<List<Book>> getBooks({
     int? pageSize,
     int? pageKey,
-    bool? unable,
+    bool? isAbleToCheckOut,
     String? keyword,
   });
 

@@ -14,9 +14,7 @@ class _BookListTemplate extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          CheckOutCheckBoxAtom(
-            vm: vm,
-          ),
+          CheckBoxAtom(vm: vm),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             child: SearchBarMolecule(

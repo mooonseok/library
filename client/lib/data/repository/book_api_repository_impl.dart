@@ -13,13 +13,13 @@ class BookApiRepositoryImpl implements BookApiRepository {
   Future<List<Book>> getBooks({
     int? pageSize,
     int? pageKey,
-    bool? unable,
+    bool? isAbleToCheckOut,
     String? keyword,
   }) async {
     final result = await api.getProject(
       pageKey: pageKey,
       pageSize: pageSize,
-      unable: unable,
+      isAbleToCheckOut: isAbleToCheckOut,
       keyword: keyword,
     );
     return result;
