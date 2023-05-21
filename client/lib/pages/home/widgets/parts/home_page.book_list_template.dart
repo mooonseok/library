@@ -1,15 +1,22 @@
 part of '../../home_page.dart';
 
 class _BookListTemplate extends StatelessWidget {
-  final BookInfiniteScrollMethod bookInfiniteScrollMethod;
+  final HomeViewModel vm;
   const _BookListTemplate({
     Key? key,
-    required this.bookInfiniteScrollMethod,
+    required this.vm,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<HomeViewModel>(context);
+    vm.bookInfiniteScrollCubit.init(
+      vm.homeControllerModel.pagingController,
+      BookInfiniteScrollFunction(getData: _getData(vm)),
+    );
+    BookInfiniteScrollMethod bookInfiniteScrollMethod =
+        BookInfiniteScrollMethod(
+      dataCubit: vm.bookInfiniteScrollCubit,
+    );
 
     return SingleChildScrollView(
       child: Column(
@@ -59,4 +66,36 @@ class _BookListTemplate extends StatelessWidget {
       ErrorNotifierMolecule(
         retryButtonCallback: () => refresh(),
       );
+
+  _getData(
+    HomeViewModel vm,
+  ) =>
+      ({
+        required int pageKey,
+        required int pageSize,
+        bool? unable,
+        String? keyword,
+      }) async {
+        final result = await _getBookList(
+          pageKey: pageKey,
+          pageSize: pageSize,
+          vm: vm,
+        );
+        List<dynamic> dataList = [];
+        dataList = result;
+        return dataList;
+      };
+
+  Future<List<Book>> _getBookList({
+    required int pageKey,
+    required int pageSize,
+    required HomeViewModel vm,
+  }) async {
+    return await vm.bookApiRepository.getBooks(
+      pageSize: pageSize,
+      pageKey: pageKey,
+      unable: vm.checkBorrowedCubit.state ? true : null,
+      keyword: vm.homeControllerModel.searchTextEdittingController.text,
+    );
+  }
 }
