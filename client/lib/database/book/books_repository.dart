@@ -26,15 +26,15 @@ class BooksRepository {
     int pageSize,
     int pageKey,
     String? keyword,
-    bool? unable,
+    bool? isAbleToCheckOut,
   ) async {
     final db = await database;
     List<dynamic> whereArgs = keyword?.isNotEmpty == true ? ['%$keyword%'] : [];
     String whereClause = keyword?.isNotEmpty == true ? 'name LIKE ? AND ' : '';
 
-    if (unable != null) {
+    if (isAbleToCheckOut != null) {
       whereClause += 'isAbleCheckOut = ? AND ';
-      whereArgs.add(unable ? 0 : 1);
+      whereArgs.add(isAbleToCheckOut ? 0 : 1);
     }
 
     final maps = await db.query(

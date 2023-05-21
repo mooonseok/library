@@ -17,7 +17,7 @@ class BookInfiniteScrollMethod extends InfiniteScrollInterface<dynamic> {
   Future<List<dynamic>> getInfiniteScrollItemData({
     required int pageSize,
     required int pageKey,
-    bool? unable,
+    bool? isAbleToCheckOut,
     String? keyword,
   }) async {
     return functionProps.getData!(

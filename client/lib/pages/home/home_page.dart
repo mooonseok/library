@@ -9,7 +9,7 @@ import 'package:client/pages/home/home_view_model.dart';
 import 'package:client/pages/home/models/management_menu_model.dart';
 import 'package:client/pages/home/widgets/book_delete_modal_organism.dart';
 import 'package:client/pages/home/widgets/book_list_tab_title_molecule.dart';
-import 'package:client/pages/home/widgets/check_out_check_box_atom.dart';
+import 'package:client/pages/home/widgets/check_box_atom.dart';
 import 'package:client/pages/home/widgets/error_notifier_molecule.dart';
 import 'package:client/pages/home/widgets/home_tab_bar_template.dart';
 import 'package:client/pages/home/widgets/manage_list_tile_template.dart';

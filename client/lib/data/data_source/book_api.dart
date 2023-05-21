@@ -10,12 +10,13 @@ class BookApi {
   Future<List<Book>> getProject({
     int? pageKey,
     int? pageSize,
-    bool? unable,
+    bool? isAbleToCheckOut,
     String? keyword = '',
   }) async {
     try {
-      final response = await BooksModule.service
-          .getBookList(pageKey!, pageSize!, unable: unable, keyword: keyword);
+      final response = await BooksModule.service.getBookList(
+          pageKey!, pageSize!,
+          isAbleToCheckOut: isAbleToCheckOut, keyword: keyword);
       return response;
     } catch (e) {
       rethrow;

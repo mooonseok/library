@@ -2,7 +2,7 @@ abstract class InfiniteScrollFunctionInterface<T> {
   final Future<List<dynamic>> Function({
     required int pageKey,
     required int pageSize,
-    bool? unable,
+    bool? isAbleToCheckOut,
     String? keyword,
   })? getData;
 
