@@ -1,3 +1,4 @@
+import 'package:client/database/book/models/book_list_api_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'entities/book.dart';
@@ -23,24 +24,24 @@ class BooksRepository {
   }
 
   Future<List<Book>> getBooks(
-    int pageSize,
-    int pageKey,
-    String? keyword,
-    bool? isAbleToCheckOut,
+    BookListApiModel bookListApiModel,
   ) async {
     final db = await database;
-    List<dynamic> whereArgs = keyword?.isNotEmpty == true ? ['%$keyword%'] : [];
-    String whereClause = keyword?.isNotEmpty == true ? 'name LIKE ? AND ' : '';
+    List<dynamic> whereArgs = bookListApiModel.keyword?.isNotEmpty == true
+        ? ['%${bookListApiModel.keyword}%']
+        : [];
+    String whereClause =
+        bookListApiModel.keyword?.isNotEmpty == true ? 'name LIKE ? AND ' : '';
 
-    if (isAbleToCheckOut != null) {
+    if (bookListApiModel.isAbleToCheckOut != null) {
       whereClause += 'isAbleCheckOut = ? AND ';
-      whereArgs.add(isAbleToCheckOut ? 0 : 1);
+      whereArgs.add(bookListApiModel.isAbleToCheckOut! ? 0 : 1);
     }
 
     final maps = await db.query(
       Book.tableName,
-      limit: pageSize,
-      offset: pageKey,
+      limit: bookListApiModel.pageSize,
+      offset: bookListApiModel.pageKey,
       where: whereClause.isNotEmpty
           ? whereClause.substring(0, whereClause.length - 5)
           : null,

@@ -92,10 +92,12 @@ class _BookListTemplate extends StatelessWidget {
     required HomeViewModel vm,
   }) async {
     return await vm.bookApiRepository.getBooks(
-      pageSize: pageSize,
-      pageKey: pageKey,
-      unable: vm.checkBorrowedCubit.state ? true : null,
-      keyword: vm.homeControllerModel.searchTextEdittingController.text,
+      bookListApiModel: BookListApiModel(
+        pageKey: pageKey,
+        pageSize: pageSize,
+        isAbleToCheckOut: vm.checkBorrowedCubit.state ? true : null,
+        keyword: vm.homeControllerModel.searchTextEdittingController.text,
+      ),
     );
   }
 }

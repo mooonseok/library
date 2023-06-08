@@ -36,50 +36,28 @@ class BookListRowMolecule extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              flex: 80,
-              child: Text254Atom(
-                book.id.toString(),
-                style: TypoType.body1M.getTextStyle(),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              flex: 120,
-              child: Text254Atom(
-                book.name,
-                style: TypoType.body1M.getTextStyle(),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              flex: 150,
-              child: Text254Atom(
-                book.author,
-                style: TypoType.body1M.getTextStyle(),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              flex: 130,
-              child: Text254Atom(
-                book.isAbleCheckOut! ? '가능' : '대출 중',
-                style: TypoType.body1M.getTextStyle(),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              flex: 130,
-              child: Text254Atom(
-                PrimaryMethod.check.isNull(book.borrower)
-                    ? '-'
-                    : book.borrower!,
-                style: TypoType.body1M.getTextStyle(),
-                textAlign: TextAlign.center,
-              ),
+            _getBookInformationCell(text: book.id.toString(), flex: 80),
+            _getBookInformationCell(text: book.name, flex: 120),
+            _getBookInformationCell(text: book.author, flex: 150),
+            _getBookInformationCell(text: book.isAbleCheckOut! ? '가능' : '대출 중'),
+            _getBookInformationCell(
+              text: PrimaryMethod.check.isNull(book.borrower)
+                  ? '-'
+                  : book.borrower!,
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Expanded _getBookInformationCell({int? flex = 130, required String text}) {
+    return Expanded(
+      flex: 130,
+      child: Text254Atom(
+        PrimaryMethod.check.isNull(book.borrower) ? '-' : book.borrower!,
+        style: TypoType.body1M.getTextStyle(),
+        textAlign: TextAlign.center,
       ),
     );
   }

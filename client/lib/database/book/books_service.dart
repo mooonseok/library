@@ -1,5 +1,6 @@
 import 'package:client/database/book/dto/create_book_dto.dart';
 import 'package:client/database/book/dto/update_book_dto.dart';
+import 'package:client/database/book/models/book_list_api_model.dart';
 
 import 'books_repository.dart';
 import 'entities/book.dart';
@@ -19,10 +20,8 @@ class BooksService {
     return await repository.create(newBook);
   }
 
-  Future<List<Book>> getBookList(int pageKey, int pageSize,
-      {bool? isAbleToCheckOut, String? keyword = ''}) async {
-    return await repository.getBooks(
-        pageSize, pageKey, keyword, isAbleToCheckOut);
+  Future<List<Book>> getBookList(BookListApiModel bookListApiModel) async {
+    return await repository.getBooks(bookListApiModel);
   }
 
   Future<int> updateBookBorrower({required UpdateBookDTO bookToUpdate}) async {

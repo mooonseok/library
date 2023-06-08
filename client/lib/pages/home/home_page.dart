@@ -1,4 +1,5 @@
 import 'package:client/database/book/entities/book.dart';
+import 'package:client/database/book/models/book_list_api_model.dart';
 import 'package:client/design_system/components/atoms/text254_atom.dart';
 import 'package:client/design_system/components/molecules/app_bar254_molecule.dart';
 import 'package:client/design_system/components/templates/infinity_scroll_template254.dart';

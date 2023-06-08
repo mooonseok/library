@@ -2,6 +2,7 @@ import 'package:client/data/data_source/book_api.dart';
 import 'package:client/database/book/dto/create_book_dto.dart';
 import 'package:client/database/book/dto/update_book_dto.dart';
 import 'package:client/database/book/entities/book.dart';
+import 'package:client/database/book/models/book_list_api_model.dart';
 import 'package:client/domain/repository/book_api_repository.dart';
 
 class BookApiRepositoryImpl implements BookApiRepository {
@@ -10,18 +11,8 @@ class BookApiRepositoryImpl implements BookApiRepository {
   BookApiRepositoryImpl(this.api);
 
   @override
-  Future<List<Book>> getBooks({
-    int? pageSize,
-    int? pageKey,
-    bool? isAbleToCheckOut,
-    String? keyword,
-  }) async {
-    final result = await api.getProject(
-      pageKey: pageKey,
-      pageSize: pageSize,
-      isAbleToCheckOut: isAbleToCheckOut,
-      keyword: keyword,
-    );
+  Future<List<Book>> getBooks({BookListApiModel? bookListApiModel}) async {
+    final result = await api.getProject(bookListApiModel);
     return result;
   }
 

@@ -2,21 +2,15 @@ import 'package:client/database/book/books_module.dart';
 import 'package:client/database/book/dto/create_book_dto.dart';
 import 'package:client/database/book/dto/update_book_dto.dart';
 import 'package:client/database/book/entities/book.dart';
+import 'package:client/database/book/models/book_list_api_model.dart';
 
 class BookApi {
   BooksModule module;
   BookApi(this.module);
 
-  Future<List<Book>> getProject({
-    int? pageKey,
-    int? pageSize,
-    bool? isAbleToCheckOut,
-    String? keyword = '',
-  }) async {
+  Future<List<Book>> getProject(BookListApiModel? bookListApiModel) async {
     try {
-      final response = await BooksModule.service.getBookList(
-          pageKey!, pageSize!,
-          isAbleToCheckOut: isAbleToCheckOut, keyword: keyword);
+      final response = await BooksModule.service.getBookList(bookListApiModel!);
       return response;
     } catch (e) {
       rethrow;
